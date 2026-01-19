@@ -77,6 +77,23 @@ Get started with RaceVision today!
   npm run start
   ```
 
+  ### Creating a Release
+  To create a new release of RaceVision:
+  
+  1. Update the version in `release/app/package.json` following [semantic versioning](https://semver.org/)
+  2. Create and push a git tag matching the version:
+  ```bash
+  git tag v0.1.33
+  git push origin v0.1.33
+  ```
+  3. The GitHub Actions workflow will automatically:
+     - Build the application
+     - Create a GitHub release
+     - Upload the following artifacts:
+       - `RaceVision-Setup-{version}.exe` - Windows installer
+       - `RaceVision-Setup-{version}.exe.blockmap` - Blockmap for efficient updates
+       - `latest.yml` - Update metadata file
+
 
 ## 💬 Feedback & Support
 We’d love to hear from you! Feel free to submit issues or suggestions via the [GitHub Issues](https://github.com/mpavich2/RaceVision/issues) page.
