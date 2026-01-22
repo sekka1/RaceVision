@@ -98,3 +98,6 @@ Get started with RaceVision today!
 
 ## 💬 Feedback & Support
 We’d love to hear from you! Feel free to submit issues or suggestions via the [GitHub Issues](https://github.com/mpavich2/RaceVision/issues) page.
+
+# iRacing Docs
+* https://oauth.iracing.com/oauth2/book/introduction.html

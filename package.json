@@ -191,7 +191,7 @@
       "repo": "RaceVison2"
     }
   },
-  "devEngines": {
+  "engines": {
     "node": ">=14.x",
     "npm": ">=7.x"
   },
