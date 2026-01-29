@@ -29,11 +29,19 @@ interface TokenResponse {
 
 export class IRacingAuthClient {
   username: string;
+
   password: string;
+
   clientId: string;
+
   clientSecret: string;
 
-  constructor(username: string, password: string, clientId: string, clientSecret: string) {
+  constructor(
+    username: string,
+    password: string,
+    clientId: string,
+    clientSecret: string,
+  ) {
     this.username = username;
     this.password = password;
     this.clientId = clientId;

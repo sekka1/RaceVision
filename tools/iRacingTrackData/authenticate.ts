@@ -12,7 +12,9 @@ export const authenticate = async (): Promise<string> => {
   }
 
   if (!clientId || !clientSecret) {
-    throw new Error('Auth Error: Missing IRACING_CLIENT_ID or IRACING_CLIENT_SECRET. Please register your application at https://oauth.iracing.com/oauth2/book/client_registration.html');
+    throw new Error(
+      'Auth Error: Missing IRACING_CLIENT_ID or IRACING_CLIENT_SECRET. Please register your application at https://oauth.iracing.com/oauth2/book/client_registration.html',
+    );
   }
 
   const authToken = await new IRacingAuthClient(
