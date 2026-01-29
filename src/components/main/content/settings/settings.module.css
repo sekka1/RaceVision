@@ -10,3 +10,36 @@
   font-size: large;
   margin-bottom: 0.4rem;
 }
+
+.description {
+  font-size: 0.875rem;
+  color: #888;
+  margin: 0 0 0.5rem 0;
+}
+
+.recordingStatus {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: #e74c3c;
+  font-weight: 500;
+}
+
+.recordingDot {
+  width: 10px;
+  height: 10px;
+  background-color: #e74c3c;
+  border-radius: 50%;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

@@ -17,4 +17,8 @@ export enum IpcChannels {
 
   GET_USER_SETTINGS = 'userSettings',
   GET_APP_VERSION = 'get-app-version',
+
+  START_RECORDING = 'start-recording',
+  STOP_RECORDING = 'stop-recording',
+  GET_RECORDING_STATUS = 'get-recording-status',
 }

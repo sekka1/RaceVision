@@ -7,6 +7,7 @@ import {
   updateUserSettings,
 } from '../storeUtils';
 import { WindowManager } from './windowManager';
+import { recordingService } from './recordingService';
 
 const getAllOverlayWindows = () => {
   return BrowserWindow.getAllWindows().filter(
@@ -78,5 +79,18 @@ export const registerIpcHandlers = (windows: WindowManager) => {
     }
     updateUserSettings({ isDarkMode: nativeTheme.shouldUseDarkColors });
     return nativeTheme.shouldUseDarkColors;
+  });
+
+  // Recording handlers
+  ipcMain.handle(IpcChannels.START_RECORDING, () => {
+    return recordingService.start();
+  });
+
+  ipcMain.handle(IpcChannels.STOP_RECORDING, async () => {
+    return recordingService.stop();
+  });
+
+  ipcMain.handle(IpcChannels.GET_RECORDING_STATUS, () => {
+    return recordingService.getStatus();
   });
 };

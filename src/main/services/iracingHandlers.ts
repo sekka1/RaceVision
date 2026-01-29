@@ -4,6 +4,7 @@ import { BrowserWindow } from 'electron';
 import { IpcChannels } from '../../constants/ipcChannels';
 import { ISessionInfo, ITelemetry } from '../../types/iracing';
 import { StoreLocations } from '../../constants/storeLocations';
+import { recordingService } from './recordingService';
 
 const getAllOverlayWindows = () => {
   return BrowserWindow.getAllWindows().filter(
@@ -63,10 +64,16 @@ export const initializeIRacing = () => {
     });
 
     iracing.on('SessionInfo', (sessionInfo: ISessionInfo) => {
+      // Capture for recording if active
+      recordingService.captureSessionInfo(sessionInfo);
+
       sendToAllOverlayWindows(IpcChannels.IRACING_SESSION_INFO, sessionInfo);
     });
 
     iracing.on('Telemetry', (telemetryInfo: ITelemetry) => {
+      // Capture for recording if active
+      recordingService.captureTelemetry(telemetryInfo);
+
       sendToAllOverlayWindows(
         IpcChannels.IRACING_TELEMETRY_INFO,
         telemetryInfo,
