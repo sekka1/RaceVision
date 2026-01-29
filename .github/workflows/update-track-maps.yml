@@ -29,10 +29,14 @@ jobs:
         env:
           IRACING_USERNAME: ${{ secrets.IRACING_USERNAME }}
           IRACING_PASSWORD: ${{ secrets.IRACING_PASSWORD }}
+          IRACING_CLIENT_ID: ${{ secrets.IRACING_CLIENT_ID }}
+          IRACING_CLIENT_SECRET: ${{ secrets.IRACING_CLIENT_SECRET }}
           IRACING_BASE_URL: https://members-ng.iracing.com
         run: |
           echo "IRACING_USERNAME=$IRACING_USERNAME" > .env
           echo "IRACING_PASSWORD=$IRACING_PASSWORD" >> .env
+          echo "IRACING_CLIENT_ID=$IRACING_CLIENT_ID" >> .env
+          echo "IRACING_CLIENT_SECRET=$IRACING_CLIENT_SECRET" >> .env
           echo "IRACING_BASE_URL=$IRACING_BASE_URL" >> .env
           npm run generate-tracks
 

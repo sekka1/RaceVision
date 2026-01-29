@@ -22,7 +22,7 @@ export class IRacingClient {
 
     const response = await fetch(`${this.baseUrl}/data/track/assets`, {
       headers: {
-        cookie: this.secret,
+        Authorization: this.secret,
       },
     });
 
@@ -49,7 +49,7 @@ export class IRacingClient {
 
     const response = await fetch(`${this.baseUrl}/data/track/get`, {
       headers: {
-        cookie: this.secret,
+        Authorization: this.secret,
       },
     });
 
@@ -74,7 +74,7 @@ export class IRacingClient {
   async getTrackSvg(mapBaseUrl: string, mapLayerPath: string) {
     const response = await fetch(`${mapBaseUrl}${mapLayerPath}`, {
       headers: {
-        cookie: this.secret,
+        Authorization: this.secret,
       },
     });
 

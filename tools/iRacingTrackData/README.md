@@ -28,6 +28,7 @@ This tool requires OAuth2 credentials from iRacing. To get started:
    IRACING_PASSWORD=your_password
    IRACING_CLIENT_ID=your_client_id_here
    IRACING_CLIENT_SECRET=your_client_secret_here
+   IRACING_BASE_URL=https://members-ng.iracing.com
    ```
 
 ### Authentication Flow
@@ -83,6 +84,7 @@ The test suite covers:
    - `IRACING_PASSWORD` - Your iRacing password
    - `IRACING_CLIENT_ID` - OAuth2 client ID (from iRacing registration)
    - `IRACING_CLIENT_SECRET` - OAuth2 client secret (from iRacing registration)
+   - `IRACING_BASE_URL` - iRacing API base URL (https://members-ng.iracing.com)
 2. The password is masked using SHA-256: `hash(password + normalized_username)`
 3. The client secret is masked using SHA-256: `hash(client_secret + normalized_client_id)`
 4. A POST request is sent to `https://oauth.iracing.com/oauth2/token` with `password_limited` grant
