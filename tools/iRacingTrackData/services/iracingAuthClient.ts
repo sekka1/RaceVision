@@ -5,7 +5,7 @@ import 'dotenv/config';
  * Mask a secret (password or client_secret) using iRacing's OAuth2 masking algorithm.
  * The algorithm is: SHA-256(secret + normalized_identifier)
  * Where normalized_identifier is trimmed and lowercased.
- * 
+ *
  * @param secret - The secret to mask (password or client_secret)
  * @param identifier - The identifier (username for password, client_id for client_secret)
  * @returns Base64 encoded SHA-256 hash
@@ -83,7 +83,7 @@ export class IRacingAuthClient {
     }
 
     const tokenData: TokenResponse = await response.json();
-    
+
     if (!tokenData.access_token) {
       throw new Error('Auth Error: No access token in response');
     }
