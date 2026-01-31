@@ -320,11 +320,22 @@ See [tools/iRacingTrackData/README.md](tools/iRacingTrackData/README.md) for OAu
 
 ## Agent Tips
 
+### ⚠️ CRITICAL: Before Committing and Pushing
+
+**You MUST run these commands before ANY git commit/push:**
+
+```bash
+npm run lint      # Fix any errors before proceeding
+npm run start     # Verify the app runs without errors
+```
+
+Do NOT commit or push if either command fails. Fix all lint errors first.
+
+---
+
 - Always check `package.json` scripts before running commands
 - Refer to type definitions in `src/types/` for data structures
 - Use existing hooks in `src/hooks/` rather than creating duplicates
 - Follow the component structure in `src/components/` for consistency
-- Test changes with `npm run start` before building
 - When modifying authentication, refer to OAuth2 documentation
 - Track map data is pre-generated - run `generate-tracks` when tracks update
-- **After making any code changes, run `npm run lint` to ensure code quality and formatting are correct**
