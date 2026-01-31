@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { app, dialog } from 'electron';
 import * as fs from 'fs';
 import { ISessionInfo, ITelemetry } from '../../types/iracing';
@@ -107,7 +108,9 @@ class RecordingService {
 
     // Log every 100 frames to avoid console spam
     if (this.telemetryFrames.length % 100 === 0) {
-      console.debug(`[RecordingService] Captured ${this.telemetryFrames.length} telemetry frames`);
+      console.debug(
+        `[RecordingService] Captured ${this.telemetryFrames.length} telemetry frames`,
+      );
     }
 
     const frame: ITelemetryFrame = {

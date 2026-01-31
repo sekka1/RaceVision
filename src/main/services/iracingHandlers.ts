@@ -19,15 +19,6 @@ const sendToAllWindows = (channel: string, data: ISessionInfo | ITelemetry) => {
   });
 };
 
-const sendToAllOverlayWindows = (
-  channel: string,
-  data: ISessionInfo | ITelemetry,
-) => {
-  getAllOverlayWindows().forEach((window) => {
-    window.webContents.send(channel, data);
-  });
-};
-
 const reloadAllOverlayWindows = () => {
   getAllOverlayWindows().forEach((window) => {
     window.reload();
@@ -90,17 +81,15 @@ export const initializeIRacing = () => {
 
     iracing.on('Telemetry', (telemetryInfo: ITelemetry) => {
       // Log every 100 telemetry events to avoid console spam
-      if (telemetryInfo?.values?.FrameNum % 100 === 0) {
-        console.debug('[iRacing] Telemetry event received at frame', telemetryInfo?.values?.FrameNum);
+      const frameNum = telemetryInfo?.values?.FrameNum ?? 0;
+      if (frameNum % 100 === 0) {
+        console.debug('[iRacing] Telemetry event received at frame', frameNum);
       }
       // Capture for recording if active
       recordingService.captureTelemetry(telemetryInfo);
 
       // Send to all windows including main (for connection status display)
-      sendToAllWindows(
-        IpcChannels.IRACING_TELEMETRY_INFO,
-        telemetryInfo,
-      );
+      sendToAllWindows(IpcChannels.IRACING_TELEMETRY_INFO, telemetryInfo);
     });
   });
 };

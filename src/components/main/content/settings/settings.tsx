@@ -76,19 +76,31 @@ export function SettingsContent() {
         <div>
           <div className={styles.header}>iRacing Connection Status</div>
           <div className={styles.statusIndicator}>
-            <span className={sessionInfo && telemetryInfo ? styles.connectedDot : styles.disconnectedDot} />
+            <span
+              className={
+                sessionInfo && telemetryInfo
+                  ? styles.connectedDot
+                  : styles.disconnectedDot
+              }
+            />
             {sessionInfo && telemetryInfo ? (
               <span>
                 Connected
-                {recordingStatus.frameCount > 0 && ` (${recordingStatus.frameCount} frames captured)`}
+                {recordingStatus.frameCount > 0 &&
+                  ` (${recordingStatus.frameCount} frames captured)`}
               </span>
             ) : (
               <span>Waiting for iRacing...</span>
             )}
           </div>
           {sessionInfo?.data?.WeekendInfo?.TrackName && (
-            <p className={styles.description} style={{ fontSize: '0.9em', marginTop: '8px' }}>
-              Track: {sessionInfo.data.WeekendInfo.TrackDisplayName || sessionInfo.data.WeekendInfo.TrackName}
+            <p
+              className={styles.description}
+              style={{ fontSize: '0.9em', marginTop: '8px' }}
+            >
+              Track:{' '}
+              {sessionInfo.data.WeekendInfo.TrackDisplayName ||
+                sessionInfo.data.WeekendInfo.TrackName}
             </p>
           )}
         </div>
