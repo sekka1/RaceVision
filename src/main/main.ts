@@ -50,6 +50,11 @@ app
     registerAutoUpdater();
     registerIpcHandlers(windows);
 
-    initializeIRacing();
+    try {
+      initializeIRacing();
+    } catch (error) {
+      console.error('[iRacing] Failed to initialize iRacing SDK:', error);
+      console.warn('[iRacing] Continuing without iRacing support');
+    }
   })
   .catch(console.log);

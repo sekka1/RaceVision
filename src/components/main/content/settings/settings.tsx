@@ -7,12 +7,15 @@ import { OpacityRangeSlider } from './range/opacity';
 import { ResetOverlayPositionButton } from '../../buttons/resetOverlay';
 import { IpcChannels } from '../../../../constants/ipcChannels';
 import { IRecordingStatus } from '../../../../types/recording';
+import { useSession, useTelemetry } from '../../../../hooks/iracing';
 
 export function SettingsContent() {
   const [recordingStatus, setRecordingStatus] = useState<IRecordingStatus>({
     isRecording: false,
   });
   const [recordingError, setRecordingError] = useState<string | null>(null);
+  const sessionInfo = useSession();
+  const telemetryInfo = useTelemetry();
 
   useEffect(() => {
     // Poll recording status every second
@@ -71,6 +74,26 @@ export function SettingsContent() {
       <h3>Recording</h3>
       <div className={styles.indentSubContent}>
         <div>
+          <div className={styles.header}>iRacing Connection Status</div>
+          <div className={styles.statusIndicator}>
+            <span className={sessionInfo && telemetryInfo ? styles.connectedDot : styles.disconnectedDot} />
+            {sessionInfo && telemetryInfo ? (
+              <span>
+                Connected
+                {recordingStatus.frameCount > 0 && ` (${recordingStatus.frameCount} frames captured)`}
+              </span>
+            ) : (
+              <span>Waiting for iRacing...</span>
+            )}
+          </div>
+          {sessionInfo?.data?.WeekendInfo?.TrackName && (
+            <p className={styles.description} style={{ fontSize: '0.9em', marginTop: '8px' }}>
+              Track: {sessionInfo.data.WeekendInfo.TrackDisplayName || sessionInfo.data.WeekendInfo.TrackName}
+            </p>
+          )}
+        </div>
+
+        <div style={{ marginTop: '20px' }}>
           <div className={styles.header}>Record iRacing Data</div>
           <p className={styles.description}>
             Record session and telemetry data for testing overlays without
@@ -99,6 +122,7 @@ export function SettingsContent() {
                 type="button"
                 className="secondaryButton"
                 onClick={handleStartRecording}
+                disabled={!sessionInfo || !telemetryInfo}
               >
                 Start Recording
               </button>

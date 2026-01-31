@@ -12,6 +12,13 @@ const getAllOverlayWindows = () => {
   );
 };
 
+const sendToAllWindows = (channel: string, data: ISessionInfo | ITelemetry) => {
+  // Send to ALL windows including main window (for connection status display)
+  BrowserWindow.getAllWindows().forEach((window) => {
+    window.webContents.send(channel, data);
+  });
+};
+
 const sendToAllOverlayWindows = (
   channel: string,
   data: ISessionInfo | ITelemetry,
@@ -42,7 +49,13 @@ const restoreAllOverlayWindows = () => {
 };
 
 export const initializeIRacing = () => {
-  const irsdk = require('iracing-sdk-js');
+  let irsdk;
+  try {
+    irsdk = require('iracing-sdk-js');
+  } catch (error) {
+    console.error('[iRacing] Could not load iracing-sdk-js module:', error);
+    throw error;
+  }
 
   irsdk.init({
     telemetryUpdateInterval: 10,
@@ -54,27 +67,37 @@ export const initializeIRacing = () => {
   console.info('\nWaiting for iRacing...');
 
   iracing.on('Connected', () => {
-    console.info('\nConnected to iRacing.');
+    console.info('[iRacing] Connected to iRacing');
     restoreAllOverlayWindows();
 
     iracing.on('Disconnected', () => {
-      console.info('iRacing shut down.');
+      console.info('[iRacing] Disconnected from iRacing');
 
       reloadAllOverlayWindows();
     });
 
     iracing.on('SessionInfo', (sessionInfo: ISessionInfo) => {
+      console.debug('[iRacing] SessionInfo event received', {
+        trackName: sessionInfo?.data?.WeekendInfo?.TrackName,
+        trackDisplayName: sessionInfo?.data?.WeekendInfo?.TrackDisplayName,
+      });
       // Capture for recording if active
       recordingService.captureSessionInfo(sessionInfo);
 
-      sendToAllOverlayWindows(IpcChannels.IRACING_SESSION_INFO, sessionInfo);
+      // Send to all windows including main (for connection status display)
+      sendToAllWindows(IpcChannels.IRACING_SESSION_INFO, sessionInfo);
     });
 
     iracing.on('Telemetry', (telemetryInfo: ITelemetry) => {
+      // Log every 100 telemetry events to avoid console spam
+      if (telemetryInfo?.values?.FrameNum % 100 === 0) {
+        console.debug('[iRacing] Telemetry event received at frame', telemetryInfo?.values?.FrameNum);
+      }
       // Capture for recording if active
       recordingService.captureTelemetry(telemetryInfo);
 
-      sendToAllOverlayWindows(
+      // Send to all windows including main (for connection status display)
+      sendToAllWindows(
         IpcChannels.IRACING_TELEMETRY_INFO,
         telemetryInfo,
       );

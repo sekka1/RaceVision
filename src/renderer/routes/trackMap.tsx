@@ -43,7 +43,7 @@ export default function TrackMapApp() {
           isPlayer: driver.CarIdx === userIdx,
         }))
         .filter((d) => d.progress > -1)
-        .filter((d) => d.driver.CarIdx > 0);
+        .filter((d) => d.driver.UserName !== 'Pace Car');
 
       setDriverData(driversTrackData);
     }

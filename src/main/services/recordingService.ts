@@ -48,7 +48,10 @@ class RecordingService {
     this.isRecording = false;
 
     if (!this.sessionInfo || this.telemetryFrames.length === 0) {
-      console.warn('No data recorded');
+      console.warn('[RecordingService] Recording stopped with no data', {
+        hasSessionInfo: !!this.sessionInfo,
+        frameCount: this.telemetryFrames.length,
+      });
       return {
         filePath: null,
         error:
@@ -90,11 +93,22 @@ class RecordingService {
     if (!this.isRecording) return;
 
     // Always capture the latest session info
+    if (!this.sessionInfo) {
+      console.info('[RecordingService] First sessionInfo captured:', {
+        trackName: sessionInfo?.data?.TrackName,
+        sessionType: sessionInfo?.data?.SessionType,
+      });
+    }
     this.sessionInfo = sessionInfo;
   }
 
   captureTelemetry(telemetry: ITelemetry): void {
     if (!this.isRecording) return;
+
+    // Log every 100 frames to avoid console spam
+    if (this.telemetryFrames.length % 100 === 0) {
+      console.debug(`[RecordingService] Captured ${this.telemetryFrames.length} telemetry frames`);
+    }
 
     const frame: ITelemetryFrame = {
       timestamp: Date.now() - this.startTime,
