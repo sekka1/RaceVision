@@ -12,6 +12,9 @@ export enum StoreLocations {
   RPM_LIGHTS_OVERLAY = 'rpmLightsOverlay',
   GEAR_OVERLAY = 'gearOverlay',
   ABS_OVERLAY = 'absOverlay',
+  TIRE_TEMP_OVERLAY = 'tireTempOverlay',
+  TIRE_WEAR_OVERLAY = 'tireWearOverlay',
+  TIRE_SLIP_OVERLAY = 'tireSlipOverlay',
   SETTINGS = 'settings',
   MAIN = 'Race Vision',
 }

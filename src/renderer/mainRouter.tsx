@@ -12,6 +12,9 @@ import RpmOverlayApp from './routes/rpmOverlay';
 import RpmLightsOverlayApp from './routes/rpmLightsOverlay';
 import GearOverlayApp from './routes/gearOverlay';
 import AbsOverlayApp from './routes/absOverlay';
+import TireTempOverlayApp from './routes/tireTempOverlay';
+import TireWearOverlayApp from './routes/tireWearOverlay';
+import TireSlipOverlayApp from './routes/tireSlipOverlay';
 
 export function MainRouter() {
   return (
@@ -30,6 +33,9 @@ export function MainRouter() {
         <Route path="/rpmLightsOverlay" element={<RpmLightsOverlayApp />} />
         <Route path="/gearOverlay" element={<GearOverlayApp />} />
         <Route path="/absOverlay" element={<AbsOverlayApp />} />
+        <Route path="/tireTempOverlay" element={<TireTempOverlayApp />} />
+        <Route path="/tireWearOverlay" element={<TireWearOverlayApp />} />
+        <Route path="/tireSlipOverlay" element={<TireSlipOverlayApp />} />
       </Routes>
     </HashRouter>
   );

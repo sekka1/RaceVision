@@ -12,6 +12,9 @@ import {
   RpmLightsOverlayContent,
   GearOverlayContent,
   AbsOverlayContent,
+  TireTempOverlayContent,
+  TireWearOverlayContent,
+  TireSlipOverlayContent,
 } from './individualAdvanced';
 
 // TODO: change to list, remove hardcoded indexes
@@ -54,6 +57,15 @@ export function OverlaysContent() {
   }
   if (openOverlayNavIndex === 11) {
     return <AbsOverlayContent />;
+  }
+  if (openOverlayNavIndex === 12) {
+    return <TireTempOverlayContent />;
+  }
+  if (openOverlayNavIndex === 13) {
+    return <TireWearOverlayContent />;
+  }
+  if (openOverlayNavIndex === 14) {
+    return <TireSlipOverlayContent />;
   }
   return null;
 }

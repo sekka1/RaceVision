@@ -1,0 +1,121 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.85);
+  font-family: monospace;
+}
+
+.debugHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #444;
+}
+
+.debugTitle {
+  font-size: 11px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.dataStatus {
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.tireSlipGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 6px;
+  flex: 1;
+  min-height: 120px;
+}
+
+.tireCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(30, 30, 30, 0.9);
+  border-radius: 4px;
+  padding: 4px;
+}
+
+.tireLabel {
+  font-size: 11px;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 2px;
+}
+
+.slipBarContainer {
+  width: 24px;
+  height: 40px;
+  background-color: rgba(50, 50, 50, 0.8);
+  border-radius: 2px;
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+  overflow: hidden;
+  border: 1px solid #555;
+}
+
+.slipBar {
+  width: 100%;
+  transition: height 0.05s ease-out, background-color 0.05s ease-out;
+  border-radius: 1px;
+}
+
+.slipValue {
+  font-size: 9px;
+  color: #aaaaaa;
+  margin-top: 2px;
+}
+
+.debugInfo {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 6px;
+  padding: 4px;
+  background-color: rgba(40, 40, 40, 0.8);
+  border-radius: 3px;
+}
+
+.debugRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 9px;
+  color: #888;
+}
+
+.debugValue {
+  color: #00ccff;
+  font-weight: bold;
+}
+
+.rawValues {
+  margin-top: 6px;
+  padding: 4px;
+  background-color: rgba(40, 40, 40, 0.8);
+  border-radius: 3px;
+  font-size: 9px;
+}
+
+.rawTitle {
+  color: #888;
+  margin-bottom: 2px;
+  font-weight: bold;
+}
+
+.rawRow {
+  color: #00ff88;
+  padding: 1px 0;
+}

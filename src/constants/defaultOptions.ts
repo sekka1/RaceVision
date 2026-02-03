@@ -44,6 +44,24 @@ export const DEFAULT_OPTIONS: {
     minWidth: 80,
     minHeight: 80,
   },
+  [StoreLocations.TIRE_TEMP_OVERLAY]: {
+    width: 300,
+    height: 200,
+    minWidth: 250,
+    minHeight: 150,
+  },
+  [StoreLocations.TIRE_WEAR_OVERLAY]: {
+    width: 300,
+    height: 200,
+    minWidth: 250,
+    minHeight: 150,
+  },
+  [StoreLocations.TIRE_SLIP_OVERLAY]: {
+    width: 350,
+    height: 300,
+    minWidth: 300,
+    minHeight: 250,
+  },
   default: {
     width: 600,
     height: 400,

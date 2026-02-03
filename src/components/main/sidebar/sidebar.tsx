@@ -125,6 +125,21 @@ export function Sidebar() {
               onClick={() => overlayNavClicked(11)}
               title="ABS"
             />
+            <AccordionDetailLineItem
+              isActive={openOverlayNavIndex === 12}
+              onClick={() => overlayNavClicked(12)}
+              title="Tire Temps"
+            />
+            <AccordionDetailLineItem
+              isActive={openOverlayNavIndex === 13}
+              onClick={() => overlayNavClicked(13)}
+              title="Tire Wear"
+            />
+            <AccordionDetailLineItem
+              isActive={openOverlayNavIndex === 14}
+              onClick={() => overlayNavClicked(14)}
+              title="Telemetry Debug"
+            />
           </div>
         )}
       </Accordion>
