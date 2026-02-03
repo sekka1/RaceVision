@@ -34,15 +34,18 @@ export const getUserSettings = (): IUserSettings => {
   const store = new Store();
   const storedSettings = store.get(StoreLocations.SETTINGS) as IUserSettings;
 
-  if (!storedSettings) {
-    const defaultSettings = {
-      isDarkMode: false,
-      opacity: 0.8,
-    };
-    store.set(StoreLocations.SETTINGS, defaultSettings);
+  const defaultSettings: IUserSettings = {
+    isDarkMode: false,
+    opacity: 0.8,
+    autoHideWhenNotInCar: false,
+  };
 
+  if (!storedSettings) {
+    store.set(StoreLocations.SETTINGS, defaultSettings);
     return defaultSettings;
   }
 
-  return storedSettings;
+  // Merge with defaults to handle missing properties from older versions
+  const mergedSettings = { ...defaultSettings, ...storedSettings };
+  return mergedSettings;
 };

@@ -5,6 +5,7 @@ import { IpcChannels } from '../../constants/ipcChannels';
 import { ISessionInfo, ITelemetry } from '../../types/iracing';
 import { StoreLocations } from '../../constants/storeLocations';
 import { recordingService } from './recordingService';
+import { getUserSettings } from '../storeUtils';
 
 const getAllOverlayWindows = () => {
   return BrowserWindow.getAllWindows().filter(
@@ -37,6 +38,36 @@ const restoreAllOverlayWindows = () => {
       console.log('restoring window');
     });
   });
+};
+
+// Track the previous IsOnTrack state to avoid repeated show/hide calls
+let wasOnTrack: boolean | null = null;
+
+const updateOverlayVisibility = (isOnTrack: boolean) => {
+  const { autoHideWhenNotInCar } = getUserSettings();
+
+  if (!autoHideWhenNotInCar) {
+    // If auto-hide is disabled and overlays were previously hidden, restore them
+    if (wasOnTrack === false) {
+      getAllOverlayWindows().forEach((window) => {
+        window.restore();
+      });
+    }
+    wasOnTrack = null;
+    return;
+  }
+
+  // Only update if state changed to avoid flickering
+  if (wasOnTrack !== isOnTrack) {
+    wasOnTrack = isOnTrack;
+    getAllOverlayWindows().forEach((window) => {
+      if (isOnTrack) {
+        window.restore();
+      } else {
+        window.minimize();
+      }
+    });
+  }
 };
 
 export const initializeIRacing = () => {
@@ -85,6 +116,11 @@ export const initializeIRacing = () => {
       if (frameNum % 100 === 0) {
         console.debug('[iRacing] Telemetry event received at frame', frameNum);
       }
+
+      // Update overlay visibility based on IsOnTrack status
+      const isOnTrack = telemetryInfo?.values?.IsOnTrack ?? false;
+      updateOverlayVisibility(isOnTrack);
+
       // Capture for recording if active
       recordingService.captureTelemetry(telemetryInfo);
 

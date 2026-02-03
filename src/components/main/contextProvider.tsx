@@ -13,6 +13,8 @@ interface GlobalState {
   setIsDragOverlay: (newState: boolean) => void;
   opacity: number;
   setOpacity: (newState: number) => void;
+  autoHideWhenNotInCar: boolean;
+  setAutoHideWhenNotInCar: (newState: boolean) => void;
 }
 
 const placeholder: GlobalState = {
@@ -26,6 +28,8 @@ const placeholder: GlobalState = {
   setIsDragOverlay: (foo) => foo,
   opacity: 80,
   setOpacity: (foo) => foo,
+  autoHideWhenNotInCar: false,
+  setAutoHideWhenNotInCar: (foo) => foo,
 };
 
 const AppContext: Context<GlobalState> = createContext(placeholder);
@@ -43,6 +47,9 @@ export default function ContextProvider(props: Props): any {
   const [isDarkMode, setIsDarkMode] = useState(placeholder.isDarkMode);
   const [isDragOverlay, setIsDragOverlay] = useState(placeholder.isDragOverlay);
   const [opacity, setOpacity] = useState(placeholder.opacity);
+  const [autoHideWhenNotInCar, setAutoHideWhenNotInCar] = useState(
+    placeholder.autoHideWhenNotInCar,
+  );
 
   const initialState: GlobalState = {
     openNavIndex,
@@ -55,6 +62,8 @@ export default function ContextProvider(props: Props): any {
     setIsDragOverlay,
     opacity,
     setOpacity,
+    autoHideWhenNotInCar,
+    setAutoHideWhenNotInCar,
   };
 
   return (

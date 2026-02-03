@@ -81,6 +81,10 @@ export const registerIpcHandlers = (windows: WindowManager) => {
     return nativeTheme.shouldUseDarkColors;
   });
 
+  ipcMain.on(IpcChannels.SET_AUTO_HIDE_WHEN_NOT_IN_CAR, (_, value: boolean) => {
+    updateUserSettings({ autoHideWhenNotInCar: value });
+  });
+
   // Recording handlers
   ipcMain.handle(IpcChannels.START_RECORDING, () => {
     return recordingService.start();

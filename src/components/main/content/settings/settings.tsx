@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { MainHeader } from '../header';
 import { DarkModeToggle } from './toggles/darkMode';
 import { DragToggle } from './toggles/drag';
+import { AutoHideToggle } from './toggles/autoHide';
 import styles from './settings.module.css';
 import { OpacityRangeSlider } from './range/opacity';
 import { ResetOverlayPositionButton } from '../../buttons/resetOverlay';
@@ -69,6 +70,7 @@ export function SettingsContent() {
 
         <DragToggle />
         <OpacityRangeSlider />
+        <AutoHideToggle />
       </div>
 
       <h3>Recording</h3>
