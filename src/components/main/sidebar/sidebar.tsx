@@ -99,6 +99,32 @@ export function Sidebar() {
               onClick={() => overlayNavClicked(6)}
               title="Test Overlay"
             />
+            <div className={styles.subHeader}>Individual Overlays</div>
+            <AccordionDetailLineItem
+              isActive={openOverlayNavIndex === 7}
+              onClick={() => overlayNavClicked(7)}
+              title="Speed"
+            />
+            <AccordionDetailLineItem
+              isActive={openOverlayNavIndex === 8}
+              onClick={() => overlayNavClicked(8)}
+              title="RPM"
+            />
+            <AccordionDetailLineItem
+              isActive={openOverlayNavIndex === 9}
+              onClick={() => overlayNavClicked(9)}
+              title="RPM Lights"
+            />
+            <AccordionDetailLineItem
+              isActive={openOverlayNavIndex === 10}
+              onClick={() => overlayNavClicked(10)}
+              title="Gear"
+            />
+            <AccordionDetailLineItem
+              isActive={openOverlayNavIndex === 11}
+              onClick={() => overlayNavClicked(11)}
+              title="ABS"
+            />
           </div>
         )}
       </Accordion>

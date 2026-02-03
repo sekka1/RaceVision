@@ -6,6 +6,13 @@ import { RelativesOverlayContent } from './relatives';
 import { StandingsOverlayContent } from './standings';
 import { TrackMapOverlayContent } from './trackMap';
 import { TestOverlayContent } from './testOverlay';
+import {
+  SpeedOverlayContent,
+  RpmOverlayContent,
+  RpmLightsOverlayContent,
+  GearOverlayContent,
+  AbsOverlayContent,
+} from './individualAdvanced';
 
 // TODO: change to list, remove hardcoded indexes
 export function OverlaysContent() {
@@ -31,6 +38,22 @@ export function OverlaysContent() {
   }
   if (openOverlayNavIndex === 6) {
     return <TestOverlayContent />;
+  }
+  // Individual Advanced Panel Overlays
+  if (openOverlayNavIndex === 7) {
+    return <SpeedOverlayContent />;
+  }
+  if (openOverlayNavIndex === 8) {
+    return <RpmOverlayContent />;
+  }
+  if (openOverlayNavIndex === 9) {
+    return <RpmLightsOverlayContent />;
+  }
+  if (openOverlayNavIndex === 10) {
+    return <GearOverlayContent />;
+  }
+  if (openOverlayNavIndex === 11) {
+    return <AbsOverlayContent />;
   }
   return null;
 }
