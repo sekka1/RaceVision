@@ -151,6 +151,8 @@ export interface ITelemetry {
     OkToReloadTextures: boolean;
     LoadNumTextures: boolean;
     CarLeftRight: CarLeftRight;
+    CarDistAhead: number;
+    CarDistBehind: number;
     PitsOpen: boolean;
     VidCapEnabled: boolean;
     VidCapActive: boolean;

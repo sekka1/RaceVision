@@ -17,6 +17,7 @@ import TireWearOverlayApp from './routes/tireWearOverlay';
 import TireSlipOverlayApp from './routes/tireSlipOverlay';
 import SpotterLeftOverlayApp from './routes/spotterLeftOverlay';
 import SpotterRightOverlayApp from './routes/spotterRightOverlay';
+import ProximityOverlayApp from './routes/proximityOverlay';
 
 export function MainRouter() {
   return (
@@ -43,6 +44,7 @@ export function MainRouter() {
           path="/spotterRightOverlay"
           element={<SpotterRightOverlayApp />}
         />
+        <Route path="/proximityOverlay" element={<ProximityOverlayApp />} />
       </Routes>
     </HashRouter>
   );

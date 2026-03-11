@@ -74,6 +74,12 @@ export const DEFAULT_OPTIONS: {
     minWidth: 30,
     minHeight: 80,
   },
+  [StoreLocations.PROXIMITY_OVERLAY]: {
+    width: 200,
+    height: 120,
+    minWidth: 150,
+    minHeight: 80,
+  },
   default: {
     width: 600,
     height: 400,

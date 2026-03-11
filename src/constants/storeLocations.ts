@@ -17,6 +17,7 @@ export enum StoreLocations {
   TIRE_SLIP_OVERLAY = 'tireSlipOverlay',
   SPOTTER_LEFT_OVERLAY = 'spotterLeftOverlay',
   SPOTTER_RIGHT_OVERLAY = 'spotterRightOverlay',
+  PROXIMITY_OVERLAY = 'proximityOverlay',
   SETTINGS = 'settings',
   MAIN = 'Race Vision',
 }

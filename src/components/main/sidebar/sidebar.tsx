@@ -145,6 +145,11 @@ export function Sidebar() {
               onClick={() => overlayNavClicked(15)}
               title="Spotter"
             />
+            <AccordionDetailLineItem
+              isActive={openOverlayNavIndex === 16}
+              onClick={() => overlayNavClicked(16)}
+              title="Proximity"
+            />
           </div>
         )}
       </Accordion>

@@ -38,8 +38,8 @@
  * - `CarDistAhead` (number) — Distance in meters to the car directly ahead.
  * - `CarDistBehind` (number) — Distance in meters to the car directly behind.
  *
- * These could be used in the future to scale indicator intensity based on
- * proximity, or to add front/rear proximity warnings.
+ * These are now typed in telemetry.ts and used by the Proximity overlay
+ * to show distance in feet with a color gradient (green/yellow/red).
  *
  * ## References
  *
