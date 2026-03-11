@@ -15,6 +15,8 @@ import AbsOverlayApp from './routes/absOverlay';
 import TireTempOverlayApp from './routes/tireTempOverlay';
 import TireWearOverlayApp from './routes/tireWearOverlay';
 import TireSlipOverlayApp from './routes/tireSlipOverlay';
+import SpotterLeftOverlayApp from './routes/spotterLeftOverlay';
+import SpotterRightOverlayApp from './routes/spotterRightOverlay';
 
 export function MainRouter() {
   return (
@@ -36,6 +38,11 @@ export function MainRouter() {
         <Route path="/tireTempOverlay" element={<TireTempOverlayApp />} />
         <Route path="/tireWearOverlay" element={<TireWearOverlayApp />} />
         <Route path="/tireSlipOverlay" element={<TireSlipOverlayApp />} />
+        <Route path="/spotterLeftOverlay" element={<SpotterLeftOverlayApp />} />
+        <Route
+          path="/spotterRightOverlay"
+          element={<SpotterRightOverlayApp />}
+        />
       </Routes>
     </HashRouter>
   );

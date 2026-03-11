@@ -15,6 +15,7 @@ import {
   TireTempOverlayContent,
   TireWearOverlayContent,
   TireSlipOverlayContent,
+  SpotterOverlayContent,
 } from './individualAdvanced';
 
 // TODO: change to list, remove hardcoded indexes
@@ -66,6 +67,9 @@ export function OverlaysContent() {
   }
   if (openOverlayNavIndex === 14) {
     return <TireSlipOverlayContent />;
+  }
+  if (openOverlayNavIndex === 15) {
+    return <SpotterOverlayContent />;
   }
   return null;
 }

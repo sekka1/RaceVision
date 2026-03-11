@@ -6,3 +6,4 @@ export * from './absOverlayContent';
 export * from './tireTempOverlayContent';
 export * from './tireWearOverlayContent';
 export * from './tireSlipOverlayContent';
+export * from './spotterOverlayContent';

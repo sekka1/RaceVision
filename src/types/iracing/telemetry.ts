@@ -1,3 +1,5 @@
+import { CarLeftRight } from './carLeftRight';
+
 export interface ITelemetry {
   timestamp: string;
   values: {
@@ -148,7 +150,7 @@ export interface ITelemetry {
     DCDriversSoFar: number;
     OkToReloadTextures: boolean;
     LoadNumTextures: boolean;
-    CarLeftRight: string;
+    CarLeftRight: CarLeftRight;
     PitsOpen: boolean;
     VidCapEnabled: boolean;
     VidCapActive: boolean;

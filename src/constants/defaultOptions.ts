@@ -62,6 +62,18 @@ export const DEFAULT_OPTIONS: {
     minWidth: 300,
     minHeight: 250,
   },
+  [StoreLocations.SPOTTER_LEFT_OVERLAY]: {
+    width: 120,
+    height: 400,
+    minWidth: 30,
+    minHeight: 80,
+  },
+  [StoreLocations.SPOTTER_RIGHT_OVERLAY]: {
+    width: 120,
+    height: 400,
+    minWidth: 30,
+    minHeight: 80,
+  },
   default: {
     width: 600,
     height: 400,
