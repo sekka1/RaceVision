@@ -10,8 +10,12 @@ interface TrackAsset {
   track_map_layers: { [key: string]: string };
 }
 
-async function saveTrack(iracingClient: IRacingClient, track: TrackAsset) {
+async function saveTrack(
+  iracingClient: IRacingClient,
+  track: TrackAsset,
+): Promise<{ trackId: string; failures: string[] }> {
   const trackPath = `${TRACKS_PATH}/${track.track_id}`;
+  const failures: string[] = [];
 
   if (!existsSync(trackPath)) {
     mkdirSync(trackPath, { recursive: true });
@@ -22,12 +26,15 @@ async function saveTrack(iracingClient: IRacingClient, track: TrackAsset) {
       const data = await iracingClient.getTrackSvg(track.track_map, layer);
       writeFileSync(`${trackPath}/${layer}`, data, 'utf8');
     } catch (error) {
+      failures.push(layer);
       console.error(
         `Failed to save SVG for track ${track.track_id} on layer ${layer}`,
       );
       // console.error(error);
     }
   }
+
+  return { trackId: track.track_id, failures };
 }
 
 export const saveAllTrackSvgs = async (authToken: string) => {
@@ -36,9 +43,30 @@ export const saveAllTrackSvgs = async (authToken: string) => {
   const allTracks: Record<string, TrackAsset> = JSON.parse(tracks);
   const iracingClient = new IRacingClient(authToken);
 
-  Object.values(allTracks).forEach(async (track) => {
-    await saveTrack(iracingClient, track);
-  });
+  const allFailures: Array<{ trackId: string; failures: string[] }> = [];
+
+  // Use for...of instead of forEach to properly await async operations
+  for (const track of Object.values(allTracks)) {
+    const result = await saveTrack(iracingClient, track);
+    if (result.failures.length > 0) {
+      allFailures.push(result);
+    }
+  }
+
+  if (allFailures.length > 0) {
+    console.warn(
+      `\nWarning: Failed to download some track SVG layers for ${allFailures.length} track(s):`,
+    );
+    allFailures.forEach(({ trackId, failures }) => {
+      console.warn(`  Track ${trackId}: ${failures.join(', ')}`);
+    });
+    console.warn(
+      '\nThis may be due to expired S3 URLs or missing layers in iRacing API.',
+    );
+    console.warn(
+      'The workflow will continue, but some track maps may be incomplete.\n',
+    );
+  }
 
   console.info('Saved all track SVGs');
 };
