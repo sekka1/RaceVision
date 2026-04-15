@@ -72,11 +72,7 @@ export class IRacingClient {
   }
 
   async getTrackSvg(mapBaseUrl: string, mapLayerPath: string) {
-    const response = await fetch(`${mapBaseUrl}${mapLayerPath}`, {
-      headers: {
-        Authorization: this.secret,
-      },
-    });
+    const response = await fetch(`${mapBaseUrl}${mapLayerPath}`);
 
     if (!response.ok) {
       console.error(await response.text());
