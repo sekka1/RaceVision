@@ -34,8 +34,10 @@ describe('authenticate', () => {
   it('should successfully authenticate with valid credentials', async () => {
     process.env.IRACING_USERNAME = 'test@example.com';
     process.env.IRACING_PASSWORD = 'password123';
+    process.env.IRACING_CLIENT_ID = 'my_client_id';
+    process.env.IRACING_CLIENT_SECRET = 'my_client_secret';
 
-    const expectedToken = 'irsso_membersv2=cookie1; authtoken=cookie2';
+    const expectedToken = 'Bearer abc123';
     mockGenerateToken.mockResolvedValue(expectedToken);
 
     const token = await authenticate();
@@ -44,6 +46,8 @@ describe('authenticate', () => {
     expect(IRacingAuthClient).toHaveBeenCalledWith(
       'test@example.com',
       'password123',
+      'my_client_id',
+      'my_client_secret',
     );
     expect(mockGenerateToken).toHaveBeenCalled();
   });
@@ -96,6 +100,8 @@ describe('authenticate', () => {
   it('should propagate errors from IRacingAuthClient', async () => {
     process.env.IRACING_USERNAME = 'test@example.com';
     process.env.IRACING_PASSWORD = 'password123';
+    process.env.IRACING_CLIENT_ID = 'my_client_id';
+    process.env.IRACING_CLIENT_SECRET = 'my_client_secret';
 
     mockGenerateToken.mockRejectedValue(
       new Error('Auth Error: Unexpected auth error'),
@@ -109,6 +115,8 @@ describe('authenticate', () => {
   it('should handle network errors', async () => {
     process.env.IRACING_USERNAME = 'test@example.com';
     process.env.IRACING_PASSWORD = 'password123';
+    process.env.IRACING_CLIENT_ID = 'my_client_id';
+    process.env.IRACING_CLIENT_SECRET = 'my_client_secret';
 
     mockGenerateToken.mockRejectedValue(new Error('Network error'));
 
