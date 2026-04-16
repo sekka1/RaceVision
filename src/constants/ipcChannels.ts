@@ -22,4 +22,8 @@ export enum IpcChannels {
   START_RECORDING = 'start-recording',
   STOP_RECORDING = 'stop-recording',
   GET_RECORDING_STATUS = 'get-recording-status',
+
+  SET_INPUT_GRAPH_FPS = 'set-input-graph-fps',
+  SET_TELEMETRY_UPDATE_INTERVAL = 'set-telemetry-update-interval',
+  SET_SESSION_INFO_UPDATE_INTERVAL = 'set-session-info-update-interval',
 }

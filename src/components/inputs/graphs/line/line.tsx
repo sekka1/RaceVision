@@ -1,11 +1,12 @@
 import { Chart as ChartJS, registerables, Chart } from 'chart.js';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ChartStreaming from 'chartjs-plugin-streaming';
 import { Line } from 'react-chartjs-2';
 import 'chartjs-adapter-luxon';
 import styles from './line.module.css';
 import { IpcChannels } from '../../../../constants/ipcChannels';
 import { ITelemetry } from '../../../../types/iracing';
+import { IUserSettings } from '../../../../types/userSettings';
 
 Chart.register(ChartStreaming);
 ChartJS.register(...registerables);
@@ -15,13 +16,22 @@ Chart.defaults.set('plugins.streaming', {
 
 const BRAKE_INPUT_LABEL = 'Brake Input Data';
 const THROTTLE_INPUT_LABEL = 'Throttle Input Data';
-const INPUT_FPS = 144;
+const DEFAULT_INPUT_FPS = 144;
 
 export function InputLineGraph() {
   const throttleInput = useRef(0);
   const brakeInput = useRef(0);
+  const [inputGraphFps, setInputGraphFps] = useState<number | null>(null);
 
   useEffect(() => {
+    window.electron.ipcRenderer
+      .invoke(IpcChannels.GET_USER_SETTINGS)
+      .then((userSettings: IUserSettings) => {
+        setInputGraphFps(userSettings.inputGraphFps ?? DEFAULT_INPUT_FPS);
+        return userSettings;
+      })
+      .catch(() => setInputGraphFps(DEFAULT_INPUT_FPS));
+
     window.electron.ipcRenderer.on(
       IpcChannels.IRACING_TELEMETRY_INFO,
       (telemetry: ITelemetry) => {
@@ -30,6 +40,10 @@ export function InputLineGraph() {
       },
     );
   }, []);
+
+  if (inputGraphFps === null) {
+    return null;
+  }
 
   return (
     <div className={styles.inputsLineGraph}>
@@ -42,7 +56,7 @@ export function InputLineGraph() {
               display: false,
             },
             streaming: {
-              frameRate: INPUT_FPS,
+              frameRate: inputGraphFps,
             },
           },
           scales: {

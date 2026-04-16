@@ -3,9 +3,25 @@
 import { BrowserWindow } from 'electron';
 import { IpcChannels } from '../../constants/ipcChannels';
 import { ISessionInfo, ITelemetry } from '../../types/iracing';
+import { IUserSettings } from '../../types/userSettings';
 import { StoreLocations } from '../../constants/storeLocations';
 import { recordingService } from './recordingService';
 import { getUserSettings } from '../storeUtils';
+
+// Cache settings to avoid hitting the store on every high-frequency event.
+// Refreshed every 500ms so changes take effect quickly without per-event overhead.
+const SETTINGS_CACHE_TTL_MS = 500;
+let cachedSettings: IUserSettings = getUserSettings();
+let settingsCacheTime = Date.now();
+
+const getCachedSettings = (): IUserSettings => {
+  const now = Date.now();
+  if (now - settingsCacheTime > SETTINGS_CACHE_TTL_MS) {
+    cachedSettings = getUserSettings();
+    settingsCacheTime = now;
+  }
+  return cachedSettings;
+};
 
 const getAllOverlayWindows = () => {
   return BrowserWindow.getAllWindows().filter(
@@ -44,7 +60,7 @@ const restoreAllOverlayWindows = () => {
 let wasOnTrack: boolean | null = null;
 
 const updateOverlayVisibility = (isOnTrack: boolean) => {
-  const { autoHideWhenNotInCar } = getUserSettings();
+  const { autoHideWhenNotInCar } = getCachedSettings();
 
   if (!autoHideWhenNotInCar) {
     // If auto-hide is disabled and overlays were previously hidden, restore them
@@ -88,6 +104,9 @@ export const initializeIRacing = () => {
 
   console.info('\nWaiting for iRacing...');
 
+  let lastTelemetrySent = 0;
+  let lastSessionInfoSent = 0;
+
   iracing.on('Connected', () => {
     console.info('[iRacing] Connected to iRacing');
     restoreAllOverlayWindows();
@@ -99,6 +118,12 @@ export const initializeIRacing = () => {
     });
 
     iracing.on('SessionInfo', (sessionInfo: ISessionInfo) => {
+      const settings = getCachedSettings();
+      const now = Date.now();
+      if (now - lastSessionInfoSent < settings.sessionInfoUpdateInterval)
+        return;
+      lastSessionInfoSent = now;
+
       console.debug('[iRacing] SessionInfo event received', {
         trackName: sessionInfo?.data?.WeekendInfo?.TrackName,
         trackDisplayName: sessionInfo?.data?.WeekendInfo?.TrackDisplayName,
@@ -111,6 +136,11 @@ export const initializeIRacing = () => {
     });
 
     iracing.on('Telemetry', (telemetryInfo: ITelemetry) => {
+      const settings = getCachedSettings();
+      const now = Date.now();
+      if (now - lastTelemetrySent < settings.telemetryUpdateInterval) return;
+      lastTelemetrySent = now;
+
       // Log every 100 telemetry events to avoid console spam
       const frameNum = telemetryInfo?.values?.FrameNum ?? 0;
       if (frameNum % 100 === 0) {

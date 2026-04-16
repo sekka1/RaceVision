@@ -85,6 +85,21 @@ export const registerIpcHandlers = (windows: WindowManager) => {
     updateUserSettings({ autoHideWhenNotInCar: value });
   });
 
+  ipcMain.on(IpcChannels.SET_INPUT_GRAPH_FPS, (_, value: number) => {
+    updateUserSettings({ inputGraphFps: value });
+  });
+
+  ipcMain.on(IpcChannels.SET_TELEMETRY_UPDATE_INTERVAL, (_, value: number) => {
+    updateUserSettings({ telemetryUpdateInterval: value });
+  });
+
+  ipcMain.on(
+    IpcChannels.SET_SESSION_INFO_UPDATE_INTERVAL,
+    (_, value: number) => {
+      updateUserSettings({ sessionInfoUpdateInterval: value });
+    },
+  );
+
   // Recording handlers
   ipcMain.handle(IpcChannels.START_RECORDING, () => {
     return recordingService.start();
