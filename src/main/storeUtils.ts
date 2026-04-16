@@ -38,6 +38,9 @@ export const getUserSettings = (): IUserSettings => {
     isDarkMode: false,
     opacity: 0.8,
     autoHideWhenNotInCar: false,
+    inputGraphFps: 144,
+    telemetryUpdateInterval: 10,
+    sessionInfoUpdateInterval: 10,
   };
 
   if (!storedSettings) {

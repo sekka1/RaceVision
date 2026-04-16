@@ -71,7 +71,7 @@ export class IRacingClient {
     return trackListResponse.text();
   }
 
-  async getTrackSvg(mapBaseUrl: string, mapLayerPath: string) {
+  static async getTrackSvg(mapBaseUrl: string, mapLayerPath: string) {
     const response = await fetch(`${mapBaseUrl}${mapLayerPath}`);
 
     if (!response.ok) {

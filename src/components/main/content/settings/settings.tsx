@@ -9,6 +9,7 @@ import { ResetOverlayPositionButton } from '../../buttons/resetOverlay';
 import { IpcChannels } from '../../../../constants/ipcChannels';
 import { IRecordingStatus } from '../../../../types/recording';
 import { useSession, useTelemetry } from '../../../../hooks/iracing';
+import { PerformanceSettings } from './performance';
 
 export function SettingsContent() {
   const [recordingStatus, setRecordingStatus] = useState<IRecordingStatus>({
@@ -71,6 +72,11 @@ export function SettingsContent() {
         <DragToggle />
         <OpacityRangeSlider />
         <AutoHideToggle />
+      </div>
+
+      <h3>Performance</h3>
+      <div className={styles.indentSubContent}>
+        <PerformanceSettings />
       </div>
 
       <h3>Recording</h3>

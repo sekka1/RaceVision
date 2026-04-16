@@ -23,7 +23,7 @@ async function saveTrack(
 
   for (const [, layer] of Object.entries(track.track_map_layers)) {
     try {
-      const data = await iracingClient.getTrackSvg(track.track_map, layer);
+      const data = await IRacingClient.getTrackSvg(track.track_map, layer);
       writeFileSync(`${trackPath}/${layer}`, data, 'utf8');
     } catch (error) {
       failures.push(layer);
