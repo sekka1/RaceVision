@@ -10,6 +10,7 @@ import {
 } from '../../../types/trackMap';
 import { IRacingMapLayers } from '../../../types/iracing';
 import { COLOR_CONSTANTS } from '../../../constants/colorConstants';
+import { calculateCarPositionOnTrack } from '../../../services/trackPositionCalculator';
 
 const SVG_NAMESPACE_URI = 'http://www.w3.org/2000/svg';
 const PATH_ELEMENT = 'path';
@@ -21,6 +22,7 @@ interface ITracks {
 export function TrackCanvas(props: {
   trackId: number;
   drivers: TrackDriver[];
+  trackDirection?: TrackDirection;
 }) {
   const [positions, setPositions] = useState<
     Record<number, TrackDriver & { position: { x: number; y: number } }>
@@ -43,24 +45,15 @@ export function TrackCanvas(props: {
   useEffect(() => {
     if (!trackDrawing || !line || !props.drivers?.length) return;
 
-    const direction = trackDrawing[IRacingMapLayers.START_FINISH]?.direction;
+    // Use dynamic direction from iRacing SDK if available, otherwise fallback to pre-generated data
+    const direction =
+      props.trackDirection || trackDrawing[IRacingMapLayers.START_FINISH]?.direction;
     const intersectionLength =
       trackDrawing[IRacingMapLayers.START_FINISH]?.point?.length || 0;
-    const totalLength = line.getTotalLength() || 0;
-
-    function updateCarPosition(percent: number) {
-      const adjustedLength = (totalLength * percent) % totalLength;
-      const length =
-        direction === TrackDirection.ANTICLOCKWISE
-          ? (intersectionLength + adjustedLength) % totalLength
-          : (intersectionLength - adjustedLength + totalLength) % totalLength;
-      const point = line?.getPointAtLength(length);
-      return { x: point?.x || 0, y: point?.y || 0 };
-    }
 
     const updatedPositions = props.drivers.reduce(
       (acc: any, { driver, progress, isPlayer }: any) => {
-        const position = updateCarPosition(progress);
+        const position = calculateCarPositionOnTrack(progress, line, direction, intersectionLength);
         return {
           ...acc,
           [driver.CarIdx]: { position, driver, isPlayer, progress },
@@ -76,6 +69,7 @@ export function TrackCanvas(props: {
     setIsReady(true);
   }, [
     props.drivers,
+    props.trackDirection,
     line,
     trackDrawing?.[IRacingMapLayers.ACTIVE].inside,
     trackDrawing?.[IRacingMapLayers.START_FINISH]?.direction,

@@ -4,6 +4,7 @@ import { TrackMap } from '../../components/trackMap/trackMap';
 import { getUserCarIdx } from '../../services/iracingMappingUtils';
 import { useSession, useTelemetry } from '../../hooks/iracing';
 import { useDraggable, useOpacity, useTitle } from '../../hooks/document';
+import { TrackDirection } from '../../types/trackMap';
 
 export default function TrackMapApp() {
   useTitle('Track Map');
@@ -14,6 +15,7 @@ export default function TrackMapApp() {
   const telemetryInfo = useTelemetry();
 
   const [trackId, setTrackId] = useState<number>();
+  const [trackDirection, setTrackDirection] = useState<TrackDirection>();
   const [driverData, setDriverData] = useState<
     {
       progress: number;
@@ -25,6 +27,9 @@ export default function TrackMapApp() {
   useEffect(() => {
     if (sessionInfo) {
       setTrackId(sessionInfo.data.WeekendInfo.TrackID);
+      // Extract track direction from iRacing SDK
+      const direction = sessionInfo.data.WeekendInfo.TrackDirection as TrackDirection;
+      setTrackDirection(direction);
     }
   }, [sessionInfo]);
 
@@ -51,7 +56,7 @@ export default function TrackMapApp() {
 
   return (
     <div className="overlayWindow">
-      <TrackMap trackId={trackId} drivers={driverData} />
+      <TrackMap trackId={trackId} drivers={driverData} trackDirection={trackDirection} />
       <div id="draggableWrapper">TRACK MAP WINDOW</div>
     </div>
   );

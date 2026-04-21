@@ -1,8 +1,10 @@
 import { ISessionInfo } from '../../types/iracing';
 import { TrackCanvas } from './canvas';
+import { TrackDirection } from '../../types/trackMap';
 
 export function TrackMap(props: {
   trackId?: number;
+  trackDirection?: TrackDirection;
   drivers?: {
     progress: number;
     isPlayer: boolean;
@@ -13,5 +15,11 @@ export function TrackMap(props: {
     return null;
   }
 
-  return <TrackCanvas trackId={props.trackId} drivers={props.drivers} />;
+  return (
+    <TrackCanvas
+      trackId={props.trackId}
+      drivers={props.drivers}
+      trackDirection={props.trackDirection}
+    />
+  );
 }
