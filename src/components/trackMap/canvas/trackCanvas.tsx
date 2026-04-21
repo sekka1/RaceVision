@@ -47,13 +47,19 @@ export function TrackCanvas(props: {
 
     // Use dynamic direction from iRacing SDK if available, otherwise fallback to pre-generated data
     const direction =
-      props.trackDirection || trackDrawing[IRacingMapLayers.START_FINISH]?.direction;
+      props.trackDirection ||
+      trackDrawing[IRacingMapLayers.START_FINISH]?.direction;
     const intersectionLength =
       trackDrawing[IRacingMapLayers.START_FINISH]?.point?.length || 0;
 
     const updatedPositions = props.drivers.reduce(
       (acc: any, { driver, progress, isPlayer }: any) => {
-        const position = calculateCarPositionOnTrack(progress, line, direction, intersectionLength);
+        const position = calculateCarPositionOnTrack(
+          progress,
+          line,
+          direction,
+          intersectionLength,
+        );
         return {
           ...acc,
           [driver.CarIdx]: { position, driver, isPlayer, progress },

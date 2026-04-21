@@ -7,7 +7,10 @@
 const fs = require('fs');
 const path = require('path');
 
-const tracksFilePath = path.join(__dirname, '../src/assets/normalized/tracks.json');
+const tracksFilePath = path.join(
+  __dirname,
+  '../src/assets/normalized/tracks.json',
+);
 
 try {
   // Read the current tracks.json
@@ -22,20 +25,20 @@ try {
       track['start-finish'].direction !== undefined
     ) {
       delete track['start-finish'].direction;
-      removedCount++;
+      removedCount += 1;
     }
   });
 
   // Write the updated JSON back
-  fs.writeFileSync(
-    tracksFilePath,
-    JSON.stringify(tracksData, null, 2),
-    'utf8',
-  );
+  fs.writeFileSync(tracksFilePath, JSON.stringify(tracksData, null, 2), 'utf8');
 
-  console.log(`✓ Successfully removed 'direction' field from ${removedCount} tracks`);
-  console.log('✓ Tracks will now use dynamic direction from iRacing SDK');
+  process.stdout.write(
+    `Successfully removed 'direction' field from ${removedCount} tracks\n`,
+  );
+  process.stdout.write(
+    'Tracks will now use dynamic direction from iRacing SDK\n',
+  );
 } catch (error) {
-  console.error('Error updating tracks.json:', error.message);
+  process.stderr.write(`Error updating tracks.json: ${error.message}\n`);
   process.exit(1);
 }

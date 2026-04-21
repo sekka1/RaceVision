@@ -1,12 +1,16 @@
 /**
  * @jest-environment node
  */
-import { calculateCarPositionOnTrack, getValidTrackDirection } from '../trackPositionCalculator';
+import {
+  calculateCarPositionOnTrack,
+  getValidTrackDirection,
+} from '../trackPositionCalculator';
 import { TrackDirection } from '../../types/trackMap';
 
 // Mock SVGPathElement
 class MockSVGPathElement {
   getTotalLength: jest.Mock;
+
   getPointAtLength: jest.Mock;
 
   constructor(totalLength: number) {
@@ -36,7 +40,10 @@ describe('trackPositionCalculator', () => {
     });
 
     it('should return custom default when specified', () => {
-      const result = getValidTrackDirection('invalid', TrackDirection.ANTICLOCKWISE);
+      const result = getValidTrackDirection(
+        'invalid',
+        TrackDirection.ANTICLOCKWISE,
+      );
       expect(result).toBe(TrackDirection.ANTICLOCKWISE);
     });
 

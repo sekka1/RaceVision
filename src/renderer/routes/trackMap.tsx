@@ -28,7 +28,8 @@ export default function TrackMapApp() {
     if (sessionInfo) {
       setTrackId(sessionInfo.data.WeekendInfo.TrackID);
       // Extract track direction from iRacing SDK
-      const direction = sessionInfo.data.WeekendInfo.TrackDirection as TrackDirection;
+      const direction = sessionInfo.data.WeekendInfo
+        .TrackDirection as TrackDirection;
       setTrackDirection(direction);
     }
   }, [sessionInfo]);
@@ -56,7 +57,11 @@ export default function TrackMapApp() {
 
   return (
     <div className="overlayWindow">
-      <TrackMap trackId={trackId} drivers={driverData} trackDirection={trackDirection} />
+      <TrackMap
+        trackId={trackId}
+        drivers={driverData}
+        trackDirection={trackDirection}
+      />
       <div id="draggableWrapper">TRACK MAP WINDOW</div>
     </div>
   );

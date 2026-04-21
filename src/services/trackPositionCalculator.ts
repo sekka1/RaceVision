@@ -2,7 +2,7 @@ import { TrackDirection } from '../types/trackMap';
 
 /**
  * Calculates a point on an SVG path based on lap distance percentage and track direction.
- * 
+ *
  * @param lapDistancePercent - Lap distance as percentage (0-1)
  * @param svgPath - SVG path element to measure
  * @param direction - Track direction (clockwise or anticlockwise)
@@ -21,7 +21,7 @@ export function calculateCarPositionOnTrack(
   }
 
   const adjustedLength = (totalLength * lapDistancePercent) % totalLength;
-  
+
   // Calculate the actual path length based on direction
   // Clockwise (normal): Move forward from start/finish
   // Anticlockwise: Move backward from start/finish
